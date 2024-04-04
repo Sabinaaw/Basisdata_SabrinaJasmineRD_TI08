@@ -1,0 +1,173 @@
+Setting environment for using XAMPP for Windows.
+sabri@KIM-DOKJA c:\xampp
+# cd mysql\bin
+
+sabri@KIM-DOKJA c:\xampp\mysql\bin
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbkuliah           |
+| dbti08             |
+| dbtoko             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+8 rows in set (0.035 sec)
+
+MariaDB [(none)]> dbkuliah;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'dbkuliah' at line 1
+MariaDB [(none)]> USE dbkuliah;
+Database changed
+MariaDB [dbkuliah]> SHOW TABLES;
+Empty set (0.000 sec)
+
+MariaDB [dbkuliah]> CREATE TABLE mahasiswa(
+    -> id int primary key auto_increment not null,
+    -> nim int not null,
+    -> nama varchar(50) not null,
+    -> idjurusan int references jurusan(id),
+    -> foto varchar(50));
+Query OK, 0 rows affected (0.036 sec)
+
+MariaDB [dbkuliah]> CREATE TABLE jurusan(
+    -> id int primary key auto_increment not null,
+    -> nama varchar(50) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 3
+MariaDB [dbkuliah]> CREATE TABLE jurusan(
+    -> id int primary key auto_increment not null,
+    -> nama varchar(50) not null);
+Query OK, 0 rows affected (0.038 sec)
+
+MariaDB [dbkuliah]> SHOW TABLES;
++--------------------+
+| Tables_in_dbkuliah |
++--------------------+
+| jurusan            |
+| mahasiswa          |
++--------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbkuliah]> DESC mahasiswa
+    -> ;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nim       | int(11)     | NO   |     | NULL    |
+  |
+| nama      | varchar(50) | NO   |     | NULL    |
+  |
+| idjurusan | int(11)     | YES  |     | NULL    |
+  |
+| foto      | varchar(50) | YES  |     | NULL    |
+  |
++-----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.021 sec)
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.019 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan(nama) VALUE
+    -> ('Teknik Informatika'),
+    -> ('Sistem Informasi'),
+    -> ('Bisnis Digital');
+Query OK, 3 rows affected (0.055 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  1 | Teknik Informatika |
+|  2 | Sistem Informasi   |
+|  3 | Bisnis Digital     |
++----+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> INSERT INTO mahasiswa(nim, nama, idjurusan, foto) VALUE
+    -> ('0110223237', 'Sabrina Jasmine Rambu Diena', 'p.jpg'),
+    -> ('0110223238', 'Slavina Damayanti', 'pi.jpg'),
+    -> ('0110223239', 'Aryan Sulaiman', 'pic.jpg');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [dbkuliah]> INSERT INTO mahasiswa(nim, nama, idjurusan, foto) VALUE
+    -> ('0110223237', 'Sabrina Jasmine Rambu Diena', 1, 'p.jpg')'
+    '> ('0110223238', 'Slavina Damayanti', 2, 'pi.jpg'),
+    '> ('0110223239', 'Aryan Sulaiman', 3, 'pic.jpg');
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''
+('0110223238', 'Slavina Damayanti', 2, 'pi.jpg'),
+('0110223239', 'Aryan Sul...' at line 2
+MariaDB [dbkuliah]> INSERT INTO mahasiswa(nim, nama, idjurusan, foto) VALUE
+    -> ('0110223237', 'Sabrina Jasmine Rambu Diena', 1, 'p.png'),
+    -> ('0110223238', 'Slavina Damayanti', 2, 'pi.png'),
+    -> ('0110223239', 'Aryan Sulaiman', 1, 'pic.png'),
+    -> ('0110223240', 'Ridwan Kurniawan', 3, 'pict.png'),
+    -> ('0110223241', 'Muhammad sholeh', 2, 'pict.png');
+Query OK, 5 rows affected (0.007 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+-----------------------------+-----------+----------+
+| id | nim       | nama                        | idjurusan | foto     |
++----+-----------+-----------------------------+-----------+----------+
+|  1 | 110223237 | Sabrina Jasmine Rambu Diena |         1 | p.png    |
+|  2 | 110223238 | Slavina Damayanti           |         2 | pi.png   |
+|  3 | 110223239 | Aryan Sulaiman              |         1 | pic.png  |
+|  4 | 110223240 | Ridwan Kurniawan            |         3 | pict.png |
+|  5 | 110223241 | Muhammad sholeh             |         2 | pict.png |
++----+-----------+-----------------------------+-----------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> UPDATE mahasiswa SET
+    -> nama = 'kurniawan bahri', nim = '0110223245'
+    -> WHERE id = 4;
+Query OK, 1 row affected (0.019 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+-----------------------------+-----------+----------+
+| id | nim       | nama                        | idjurusan | foto     |
++----+-----------+-----------------------------+-----------+----------+
+|  1 | 110223237 | Sabrina Jasmine Rambu Diena |         1 | p.png    |
+|  2 | 110223238 | Slavina Damayanti           |         2 | pi.png   |
+|  3 | 110223239 | Aryan Sulaiman              |         1 | pic.png  |
+|  4 | 110223245 | kurniawan bahri             |         3 | pict.png |
+|  5 | 110223241 | Muhammad sholeh             |         2 | pict.png |
++----+-----------+-----------------------------+-----------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> DELETE FROM mahasiswa WHERE id = 5;
+Query OK, 1 row affected (0.020 sec)
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+-----------+-----------------------------+-----------+----------+
+| id | nim       | nama                        | idjurusan | foto     |
++----+-----------+-----------------------------+-----------+----------+
+|  1 | 110223237 | Sabrina Jasmine Rambu Diena |         1 | p.png    |
+|  2 | 110223238 | Slavina Damayanti           |         2 | pi.png   |
+|  3 | 110223239 | Aryan Sulaiman              |         1 | pic.png  |
+|  4 | 110223245 | kurniawan bahri             |         3 | pict.png |
++----+-----------+-----------------------------+-----------+----------+
+4 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]>
