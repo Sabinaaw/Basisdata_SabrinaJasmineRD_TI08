@@ -170,4 +170,41 @@ MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
 +----+-----------+-----------------------------+-----------+----------+
 4 rows in set (0.000 sec)
 
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  1 | Teknik Informatika |
+|  2 | Sistem Informasi   |
+|  3 | Bisnis Digital     |
++----+--------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.020 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan(nama) VALUE
+    -> ('Rekayasa Perangkat Lunak'),
+    -> ('Tata Busana');
+Query OK, 2 rows affected (0.020 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------------+
+| id | nama                     |
++----+--------------------------+
+|  1 | Teknik Informatika       |
+|  2 | Sistem Informasi         |
+|  3 | Bisnis Digital           |
+|  4 | Rekayasa Perangkat Lunak |
+|  5 | Tata Busana              |
++----+--------------------------+
+5 rows in set (0.000 sec)
+
 MariaDB [dbkuliah]>
